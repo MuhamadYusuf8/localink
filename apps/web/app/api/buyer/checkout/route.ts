@@ -18,6 +18,33 @@ export async function POST(req: NextRequest) {
   try {
     const user = await getUser(req);
     if (!user?.id) return NextResponse.json({ success: false, error: { message: 'Unauthorized' } }, { status: 401 });
+
+    // Sync user to Supabase to satisfy FK constraints (since auth is handled by Laravel)
+    await supabase.from('users').upsert({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+      avatar_url: user.avatar_url,
+      is_verified: user.is_verified,
+      created_at: user.created_at,
+      updated_at: user.updated_at
+    });
+
+    // Also sync buyer profile if it exists
+    if (user.role === 'buyer' && user.buyer_profile) {
+      await supabase.from('buyer_profiles').upsert({
+        id: user.buyer_profile.id,
+        user_id: user.id,
+        buyer_type: user.buyer_profile.buyer_type || 'retail',
+        company_name: user.buyer_profile.company_name,
+        tax_id: user.buyer_profile.tax_id,
+        created_at: user.buyer_profile.created_at,
+        updated_at: user.buyer_profile.updated_at
+      });
+    }
+
     const body = await req.json();
     const items = Array.isArray(body.items) ? body.items : [];
     if (!items.length || !body.address_id || !body.courier) {
