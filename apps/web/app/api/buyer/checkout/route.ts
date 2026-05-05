@@ -30,7 +30,8 @@ export async function POST(req: NextRequest) {
       cache: 'no-store'
     });
     const addrJson = await addrRes.json();
-    const address = (addrJson.data ?? []).find((a: any) => a.id === body.address_id);
+    const rawAddress = (addrJson.data ?? []).find((a: any) => a.id === body.address_id);
+    const address = rawAddress ? { ...rawAddress, address: rawAddress.full_address } : null;
     
     if (!address) return NextResponse.json({ success: false, error: { message: 'Alamat tidak valid' } }, { status: 400 });
 
