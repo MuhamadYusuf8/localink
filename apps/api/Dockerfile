@@ -24,7 +24,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # Copy existing application directory contents
-COPY . .
+COPY apps/api/ .
 
 # Install dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev
