@@ -108,6 +108,11 @@ Route::prefix('v1')->group(function () {
             Route::get('orders/{id}', [BuyerOrderController::class, 'show']);
             Route::post('orders/{id}/cancel', [BuyerOrderController::class, 'cancel']);
             Route::post('orders/{id}/complete', [BuyerOrderController::class, 'complete']);
+
+            // Addresses
+            Route::get('addresses', [\App\Http\Controllers\Buyer\AddressController::class, 'index']);
+            Route::post('addresses', [\App\Http\Controllers\Buyer\AddressController::class, 'store']);
+            Route::delete('addresses/{id}', [\App\Http\Controllers\Buyer\AddressController::class, 'destroy']);
         });
 
         // 👑 ADMIN ROUTES

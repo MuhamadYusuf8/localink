@@ -50,11 +50,15 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const user = await getUser(req);
-    if (!user?.id) return NextResponse.json({ success: false, error: { message: 'Unauthorized' } }, { status: 401 });
+    const token = req.cookies.get('es_auth_token')?.value;
+    if (!token) return NextResponse.json({ success: false, error: { message: 'Unauthorized' } }, { status: 401 });
 
-    const { error } = await supabase.from('buyer_addresses').delete().eq('id', params.id).eq('buyer_id', user.id);
-    if (error) return NextResponse.json({ success: false, error: { message: error.message } }, { status: 500 });
+    const res = await fetch(`${apiUrl}/buyer/addresses/${params.id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const json = await res.json();
+    if (!res.ok) return NextResponse.json({ success: false, error: { message: json.message || 'Gagal menghapus alamat' } }, { status: res.status });
 
     return NextResponse.json({ success: true, data: null });
   } catch (error) {

@@ -24,7 +24,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: { message: 'Data checkout tidak lengkap' } }, { status: 400 });
     }
 
-    const { data: address } = await supabase.from('buyer_addresses').select('*').eq('id', body.address_id).eq('buyer_id', user.id).single();
+    const token = req.cookies.get('es_auth_token')?.value;
+    const addrRes = await fetch(`${apiUrl}/buyer/addresses`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store'
+    });
+    const addrJson = await addrRes.json();
+    const address = (addrJson.data ?? []).find((a: any) => a.id === body.address_id);
+    
     if (!address) return NextResponse.json({ success: false, error: { message: 'Alamat tidak valid' } }, { status: 400 });
 
     const subtotal = items.reduce((acc: number, it: any) => acc + Number(it.subtotal || 0), 0);

@@ -16,11 +16,24 @@ async function getUser(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const user = await getUser(req);
-    if (!user?.id) return NextResponse.json({ success: false, error: { message: 'Unauthorized' } }, { status: 401 });
-    const { data, error } = await supabase.from('buyer_addresses').select('*').eq('buyer_id', user.id).order('is_primary', { ascending: false });
-    if (error) return NextResponse.json({ success: false, error: { message: error.message } }, { status: 500 });
-    return NextResponse.json({ success: true, data: data ?? [] });
+    const token = req.cookies.get('es_auth_token')?.value;
+    if (!token) return NextResponse.json({ success: false, error: { message: 'Unauthorized' } }, { status: 401 });
+
+    const res = await fetch(`${apiUrl}/buyer/addresses`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store'
+    });
+    const json = await res.json();
+    if (!res.ok) return NextResponse.json({ success: false, error: { message: json.message || 'Gagal memuat alamat' } }, { status: res.status });
+
+    // Map fields: full_address -> address, is_default -> is_primary
+    const mappedData = (json.data ?? []).map((addr: any) => ({
+      ...addr,
+      address: addr.full_address,
+      is_primary: addr.is_default
+    }));
+
+    return NextResponse.json({ success: true, data: mappedData });
   } catch (error) {
     return NextResponse.json({ success: false, error: { message: error instanceof Error ? error.message : 'Terjadi kesalahan' } }, { status: 500 });
   }
@@ -28,32 +41,29 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await getUser(req);
-    if (!user?.id) return NextResponse.json({ success: false, error: { message: 'Unauthorized' } }, { status: 401 });
+    const token = req.cookies.get('es_auth_token')?.value;
+    if (!token) return NextResponse.json({ success: false, error: { message: 'Unauthorized' } }, { status: 401 });
+
     const body = await req.json();
-    const required = ['label', 'recipient_name', 'phone', 'province', 'city', 'district', 'address'];
-    for (const key of required) {
-      if (!String(body[key] ?? '').trim()) return NextResponse.json({ success: false, error: { message: `Field ${key} wajib diisi` } }, { status: 400 });
-    }
-    if (body.is_primary) await supabase.from('buyer_addresses').update({ is_primary: false }).eq('buyer_id', user.id);
-    const { data, error } = await supabase
-      .from('buyer_addresses')
-      .insert({
-        buyer_id: user.id,
-        label: body.label,
-        recipient_name: body.recipient_name,
-        phone: body.phone,
-        province: body.province,
-        city: body.city,
-        district: body.district,
-        address: body.address,
-        postal_code: body.postal_code ?? null,
-        is_primary: Boolean(body.is_primary),
-      })
-      .select('*')
-      .single();
-    if (error) return NextResponse.json({ success: false, error: { message: error.message } }, { status: 500 });
-    return NextResponse.json({ success: true, data });
+    const res = await fetch(`${apiUrl}/buyer/addresses`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
+      },
+      body: JSON.stringify(body),
+    });
+    const json = await res.json();
+    if (!res.ok) return NextResponse.json({ success: false, error: { message: json.message || 'Gagal menyimpan alamat' } }, { status: res.status });
+
+    // Map fields for response
+    const mappedAddress = {
+      ...json.data,
+      address: json.data.full_address,
+      is_primary: json.data.is_default
+    };
+
+    return NextResponse.json({ success: true, data: mappedAddress });
   } catch (error) {
     return NextResponse.json({ success: false, error: { message: error instanceof Error ? error.message : 'Terjadi kesalahan' } }, { status: 500 });
   }
