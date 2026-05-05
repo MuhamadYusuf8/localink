@@ -42,4 +42,5 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 EXPOSE 8080
 
 # Start PHP-FPM
-CMD php artisan serve --host=0.0.0.0 --port=8080
+# Start PHP-FPM menggunakan dynamic PORT dari Railway atau default ke 8080
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
