@@ -3,7 +3,7 @@ import { StaticPagePlaceholder } from '@/components/common/StaticPagePlaceholder
 
 export const metadata: Metadata = {
   title: 'FAQ',
-  description: 'Pertanyaan umum seputar penggunaan Economic Survival.',
+  description: 'Pertanyaan umum seputar penggunaan Localink.',
 }
 
 export default function FaqPage() {

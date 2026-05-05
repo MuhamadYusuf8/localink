@@ -228,7 +228,7 @@ export default function BuyerCheckoutPaymentPage() {
                   </div>
                   <div style={{ marginBottom: '16px' }}>
                     <div style={{ fontSize: '0.85rem', color: C.textMuted, marginBottom: '4px' }}>Atas Nama</div>
-                    <strong style={{ fontSize: '1rem', color: C.textMain }}>PT Economic Survival Indonesia</strong>
+                    <strong style={{ fontSize: '1rem', color: C.textMain }}>PT Localink Indonesia</strong>
                   </div>
                   <div>
                     <div style={{ fontSize: '0.85rem', color: C.textMuted, marginBottom: '4px' }}>Nominal Transfer (Tepat hingga 3 digit terakhir)</div>
@@ -291,7 +291,7 @@ export default function BuyerCheckoutPaymentPage() {
                   <div>
                     <div style={{ fontSize: '0.85rem', color: C.textMuted, marginBottom: '4px' }}>Nomor Tujuan Pembayaran</div>
                     <strong style={{ fontSize: '1.2rem', color: C.textMain }}>0812-0000-0000</strong>
-                    <div style={{ fontSize: '0.85rem', color: C.primary, fontWeight: 600, marginTop: '4px' }}>PT Economic Survival ({wallet})</div>
+                    <div style={{ fontSize: '0.85rem', color: C.primary, fontWeight: 600, marginTop: '4px' }}>PT Localink ({wallet})</div>
                   </div>
                 </div>
               </div>

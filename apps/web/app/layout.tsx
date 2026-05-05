@@ -14,8 +14,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL ?? 'http://localhost:3000'),
   title: {
-    default: 'Economic Survival — Marketplace Pertanian Indonesia',
-    template: '%s | Economic Survival',
+    default: 'Localink — Marketplace Pertanian Indonesia',
+    template: '%s | Localink',
   },
   description:
     'Platform marketplace pertanian terpercaya yang menghubungkan petani lokal langsung dengan pembeli. Beli hasil bumi segar langsung dari sumbernya.',
@@ -27,15 +27,15 @@ export const metadata: Metadata = {
     'grosir pertanian',
     'harga tani',
   ],
-  authors: [{ name: 'Economic Survival Team' }],
-  creator: 'Economic Survival',
-  publisher: 'Economic Survival',
+  authors: [{ name: 'Localink Team' }],
+  creator: 'Localink',
+  publisher: 'Localink',
   openGraph: {
     type: 'website',
     locale: 'id_ID',
     url: process.env.APP_URL ?? 'http://localhost:3000',
-    siteName: 'Economic Survival',
-    title: 'Economic Survival — Marketplace Pertanian Indonesia',
+    siteName: 'Localink',
+    title: 'Localink — Marketplace Pertanian Indonesia',
     description:
       'Beli hasil bumi segar langsung dari petani lokal Indonesia. Harga transparan, kualitas terjamin.',
     images: [
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Economic Survival Marketplace',
+        alt: 'Localink Marketplace',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Economic Survival — Marketplace Pertanian Indonesia',
+    title: 'Localink — Marketplace Pertanian Indonesia',
     description: 'Beli hasil bumi segar langsung dari petani lokal.',
     images: ['/og-image.png'],
   },

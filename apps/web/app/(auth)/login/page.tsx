@@ -4,7 +4,7 @@ import { LoginForm } from '@/components/forms/LoginForm'
 
 export const metadata: Metadata = {
   title: 'Masuk',
-  description: 'Masuk ke akun Economic Survival Anda untuk mengakses marketplace pertanian.',
+  description: 'Masuk ke akun Localink Anda untuk mengakses marketplace pertanian.',
 }
 
 export default function LoginPage() {

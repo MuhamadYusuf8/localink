@@ -4,7 +4,7 @@ import { Sprout, ShoppingBag, ArrowRight, CheckCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Daftar',
-  description: 'Bergabung dengan Economic Survival sebagai petani atau pembeli.',
+  description: 'Bergabung dengan Localink sebagai petani atau pembeli.',
 }
 
 // ─── Kartu Pilihan Peran ──────────────────────────────────
@@ -92,7 +92,7 @@ export default function RegisterPage() {
           Bergabung Bersama Kami
         </h2>
         <p className="text-text-secondary text-sm">
-          Pilih peran Anda di platform Economic Survival
+          Pilih peran Anda di platform Localink
         </p>
       </div>
 

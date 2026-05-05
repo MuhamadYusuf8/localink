@@ -99,7 +99,7 @@ export default function MarketPricePage() {
         {/* Header Card */}
         <div style={{ background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: '16px', padding: '24px', marginBottom: '16px', boxShadow: colors.shadowCard }}>
           <h1 style={{ margin: 0, color: colors.textMain, fontSize: '1.75rem', fontWeight: 700, letterSpacing: '-0.02em' }}>Harga Pasar Komoditas</h1>
-          <div style={{ color: colors.textMuted, marginTop: '6px', fontSize: '1.05rem' }}>Referensi harga terkini langsung dari pasar & petani Economic Survival</div>
+          <div style={{ color: colors.textMuted, marginTop: '6px', fontSize: '1.05rem' }}>Referensi harga terkini langsung dari pasar & petani Localink</div>
           <div style={{ color: colors.textSubtle, marginTop: '8px', fontSize: '0.85rem', fontWeight: 500 }}>Terakhir diperbarui: {new Date().toLocaleString('id-ID')}</div>
         </div>
 
@@ -228,7 +228,7 @@ export default function MarketPricePage() {
           <div style={{ background: colors.bgCard, border: `1px solid ${colors.border}`, borderRadius: '16px', padding: '24px', boxShadow: colors.shadowCard }}>
             <h3 style={{ margin: '0 0 12px 0', fontSize: '1.15rem' }}>🌱 Integritas Harga Platform</h3>
             <div style={{ color: colors.textMuted, fontSize: '0.95rem', lineHeight: '1.6' }}>
-              Perbandingan harga pasar yang ditampilkan di atas ditarik langsung dari rata-rata harga produk aktual yang diunggah oleh para petani di ekosistem <strong>Economic Survival</strong>. <br/><br/>
+              Perbandingan harga pasar yang ditampilkan di atas ditarik langsung dari rata-rata harga produk aktual yang diunggah oleh para petani di ekosistem <strong>Localink</strong>. <br/><br/>
               Fitur ini membantu para petani untuk tidak menjual di bawah harga wajar (*underselling*), sekaligus memberikan transparansi penuh bagi para pembeli.
             </div>
           </div>

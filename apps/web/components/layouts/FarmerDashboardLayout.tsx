@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, Package, ShoppingBag, BarChart2, Star,
@@ -53,8 +54,8 @@ function SidebarItem({
       href={href}
       className={clsx(
         'group relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 cursor-pointer font-medium',
-        active 
-          ? 'bg-[#ECFDF5] text-[#059669]' 
+        active
+          ? 'bg-[#ECFDF5] text-[#059669]'
           : 'text-[#64748B] hover:bg-[#F1F5F9] hover:text-[#0F172A]',
         collapsed && 'justify-center px-2'
       )}
@@ -94,14 +95,23 @@ function Sidebar({
         'flex items-center border-b border-[#E2E8F0] px-5 h-[72px] flex-shrink-0',
         collapsed ? 'justify-center px-0' : 'gap-3'
       )}>
-        <div className="w-10 h-10 bg-gradient-to-br from-[#059669] to-[#10B981] rounded-xl flex-shrink-0 flex items-center justify-center shadow-[0_4px_12px_rgba(5,150,105,0.2)]">
-          <span className="text-white font-extrabold text-[15px] font-display">ES</span>
-        </div>
-        {!collapsed && (
-          <span className="font-display font-extrabold text-[16px] text-[#0F172A] truncate tracking-tight">
-            Economic Survival
-          </span>
-        )}
+          <Link href="/farmer/dashboard" className="flex items-center gap-3.5 px-1 group">
+            <Image
+              src="/images/localink-logo.png"
+              alt="Localink"
+              width={40}
+              height={40}
+              className="w-10 h-10 object-contain shadow-lg shadow-emerald-500/10 transition-transform group-hover:scale-105"
+            />
+            {!collapsed && (
+              <div className="flex flex-col leading-tight">
+                <span className="font-display font-bold text-[17px] text-[#0F172A] tracking-tight">
+                  Localink
+                </span>
+                <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest">Farmer</span>
+              </div>
+            )}
+          </Link>
         {mobile && (
           <button onClick={onClose} className="ml-auto text-[#64748B] hover:text-[#0F172A] p-2 bg-[#F1F5F9] rounded-lg">
             <X size={20} />
@@ -196,7 +206,7 @@ function TopBar({
           <div className="flex items-center gap-6 flex-1">
             <button
               onClick={onMenuClick}
-               className="lg:hidden p-2.5 text-[#64748B] hover:text-[#0F172A] transition-colors bg-[#F1F5F9] rounded-xl border border-[#E2E8F0]"
+              className="lg:hidden p-2.5 text-[#64748B] hover:text-[#0F172A] transition-colors bg-[#F1F5F9] rounded-xl border border-[#E2E8F0]"
             >
               <Menu size={22} />
             </button>

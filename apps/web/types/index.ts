@@ -1,5 +1,5 @@
 // =====================================================
-// Economic Survival — Global TypeScript Type Definitions
+// Localink — Global TypeScript Type Definitions
 // =====================================================
 
 // ─── Enum Types ──────────────────────────────────────────

@@ -3,7 +3,7 @@ import { StaticPagePlaceholder } from '@/components/common/StaticPagePlaceholder
 
 export const metadata: Metadata = {
   title: 'Lupa Password',
-  description: 'Pulihkan akses akun Economic Survival Anda.',
+  description: 'Pulihkan akses akun Localink Anda.',
 }
 
 export default function ForgotPasswordPage() {

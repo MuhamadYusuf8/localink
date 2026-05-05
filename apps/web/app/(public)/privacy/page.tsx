@@ -3,7 +3,7 @@ import { StaticPagePlaceholder } from '@/components/common/StaticPagePlaceholder
 
 export const metadata: Metadata = {
   title: 'Kebijakan Privasi',
-  description: 'Kebijakan privasi dan perlindungan data pengguna Economic Survival.',
+  description: 'Kebijakan privasi dan perlindungan data pengguna Localink.',
 }
 
 export default function PrivacyPage() {

@@ -78,7 +78,7 @@ function LoginFormInner() {
           Selamat Datang Kembali
         </h2>
         <p className="text-slate-500 text-sm font-medium">
-          Masuk ke akun Economic Survival Anda untuk melanjutkan
+          Masuk ke akun Localink Anda untuk melanjutkan
         </p>
       </div>
 

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ShoppingCart, LogOut, Package, MessagesSquare, UserRound } from 'lucide-react'
 import { useAuth } from '@/lib/hooks/useAuth'
 import { useCartStore } from '@/lib/store/cartStore'
@@ -32,17 +33,21 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/95 border-b border-[#D1E8DF] shadow-sm">
         <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between gap-4">
 
-          {/* Logo — tidak berubah, emerald tetap */}
-          <Link href="/" className="flex items-center gap-3 shrink-0 group">
-            <div className="w-9 h-9 bg-emerald-500 rounded-button flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-              <span className="text-white font-bold text-base font-display tracking-tight">ES</span>
-            </div>
+          {/* Logo Localink (Icon + Text) */}
+          <Link href="/" className="flex items-center gap-3.5 shrink-0 group">
+            <Image
+              src="/images/localink-logo.png"
+              alt="Localink Logo"
+              width={48}
+              height={48}
+              className="w-12 h-12 object-contain transition-transform group-hover:scale-105"
+              priority
+            />
             <div className="hidden sm:block leading-tight">
-              {/* text-text-primary → text-[#0F1F1A] */}
-              <span className="font-display font-bold text-lg text-[#0F1F1A] block">
-                Economic Survival
+              <span className="font-display font-bold text-xl text-[#0F1F1A] block tracking-tight">
+                Localink
               </span>
-              <span className="text-[10px] text-emerald-600 font-medium tracking-widest uppercase">Marketplace</span>
+              <span className="text-[11px] text-emerald-600 font-bold tracking-[0.1em] uppercase">Marketplace</span>
             </div>
           </Link>
 
@@ -193,13 +198,17 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-emerald-500 rounded-button flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">ES</span>
-                </div>
+              <div className="flex items-center gap-3 mb-4">
+                <Image
+                  src="/images/localink-logo.png"
+                  alt="Localink"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 object-contain"
+                />
                 {/* text-text-primary → text-[#0F1F1A] */}
                 <span className="font-display font-bold text-lg text-[#0F1F1A]">
-                  Economic Survival
+                  Localink
                 </span>
               </div>
               {/* text-text-secondary → text-[#1A3329] */}
@@ -231,7 +240,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
 
           {/* border-dark-border → border-[#D1E8DF] | text-text-muted → text-[#4B7A67] */}
           <div className="mt-12 pt-8 border-t border-[#D1E8DF] text-center text-xs text-[#4B7A67]">
-            &copy; {new Date().getFullYear()} Economic Survival. All rights reserved.
+            &copy; {new Date().getFullYear()} Localink. All rights reserved.
           </div>
         </div>
       </footer>

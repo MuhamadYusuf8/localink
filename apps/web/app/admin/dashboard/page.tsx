@@ -190,7 +190,7 @@ export default function AdminDashboardPage() {
             Dashboard <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Utama</span>
           </h1>
           <p className="text-[16px] text-slate-500 font-medium max-w-2xl leading-relaxed">
-            Pantau arus kas, pertumbuhan pengguna, dan kesehatan ekosistem pertanian digital Economic Survival secara real-time.
+            Pantau arus kas, pertumbuhan pengguna, dan kesehatan ekosistem pertanian digital Localink secara real-time.
           </p>
         </div>
 
