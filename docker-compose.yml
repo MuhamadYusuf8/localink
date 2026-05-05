@@ -1,0 +1,137 @@
+version: '3.9'
+
+# ===================================================
+# Economic Survival — Docker Compose (Local Dev Stack)
+# ===================================================
+
+services:
+  # PostgreSQL 16 — Primary Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: economic_survival_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: economic_survival
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - economic_survival_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d economic_survival"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis 7 — Queue, Cache, Session
+  redis:
+    image: redis:7-alpine
+    container_name: economic_survival_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ""
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - economic_survival_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # MailHog — Email Testing (SMTP 1025, UI 8025)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: economic_survival_mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"  # SMTP server
+      - "8025:8025"  # Web UI
+    networks:
+      - economic_survival_network
+
+  # Laravel API (Production-like container)
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: ../../docker/api/Dockerfile
+    container_name: economic_survival_api
+    restart: unless-stopped
+    volumes:
+      - ./apps/api:/var/www/html
+      - /var/www/html/vendor
+    environment:
+      APP_ENV: local
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: economic_survival
+      DB_USERNAME: postgres
+      DB_PASSWORD: secret
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+    ports:
+      - "8000:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - economic_survival_network
+
+  # Laravel Queue Worker
+  queue_worker:
+    build:
+      context: ./apps/api
+      dockerfile: ../../docker/api/Dockerfile
+    container_name: economic_survival_queue
+    restart: unless-stopped
+    command: php artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
+    volumes:
+      - ./apps/api:/var/www/html
+      - /var/www/html/vendor
+    environment:
+      APP_ENV: local
+      DB_HOST: postgres
+      REDIS_HOST: redis
+      QUEUE_CONNECTION: redis
+    depends_on:
+      - api
+    networks:
+      - economic_survival_network
+
+  # Laravel Scheduler
+  scheduler:
+    build:
+      context: ./apps/api
+      dockerfile: ../../docker/api/Dockerfile
+    container_name: economic_survival_scheduler
+    restart: unless-stopped
+    command: >
+      sh -c "while true; do php artisan schedule:run --verbose --no-interaction && sleep 60; done"
+    volumes:
+      - ./apps/api:/var/www/html
+      - /var/www/html/vendor
+    depends_on:
+      - api
+    networks:
+      - economic_survival_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  economic_survival_network:
+    driver: bridge
