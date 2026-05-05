@@ -1,7 +1,0 @@
-{
-  "version": 2,
-  "buildCommand": "cd ../.. && npm run build --filter=@economic-survival/web",
-  "installCommand": "cd ../.. && npm install",
-  "outputDirectory": ".next",
-  "framework": "nextjs"
-}
